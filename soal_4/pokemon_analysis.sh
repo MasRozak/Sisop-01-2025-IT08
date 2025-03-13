@@ -1,6 +1,6 @@
 #!/bin/bash
 
-LINE=$(printf '=%.0s' {1..132})
+LINE=$(printf '=%.0s' $(seq 1 $(tput cols)))
 
 print_centered() {
     local termwidth=$(tput cols)
@@ -347,7 +347,7 @@ case "$COMMAND" in
     	print_centered "🔍 SEARCH RESULTS FOR: $OPTION"
     	print_centered "$LINE"
 
-    	awk -F',' -v term="$OPTION" 'NR==1 || tolower($1) ~ tolower(term)' "$FILE" | column -s ',' -t
+    	awk -F',' -v term="$OPTION" 'NR==1 || tolower($1) ~ tolower(term)' "$FILE" | sort -t',' -k2,2nr | column -s ',' -t
 
     	print_centered "$LINE"
     	exit 0
@@ -363,7 +363,7 @@ case "$COMMAND" in
         print_centered "$LINE"
         print_centered "🌿 FILTERED POKEMON LIST FOR TYPE: $OPTION"
         print_centered "$LINE"
-        awk -F',' -v type="$OPTION" 'NR==1 || tolower($4) == tolower(type) || tolower($5) == tolower(type)' "$FILE" | column -s ',' -t
+        awk -F',' -v type="$OPTION" 'NR==1 || tolower($4) == tolower(type) || tolower($5) == tolower(type)' "$FILE" |sort -t',' -k2,2nr | column -s ',' -t
         print_centered "$LINE"
         exit 0
         ;;
