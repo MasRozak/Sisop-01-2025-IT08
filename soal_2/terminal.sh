@@ -1,19 +1,44 @@
 #!/bin/bash
 
-while true; do
-    echo "=== Sistem Arcaea ==="
-    echo "1. Register"
-    echo "2. Login"
-    echo "3. Crontab Manager"
-    echo "4. Keluar"
+clear
 
-    read -p "Pilih menu: " choice
+cat << "EOF"
+   ___   ___  ________   _______     ______  __________________  ___
+  / _ | / _ \/ ___/ _ | / __/ _ |   / __/\ \/ / __/_  __/ __/  |/  /
+ / __ |/ , _/ /__/ __ |/ _// __ |  _\ \   \  /\ \  / / / _// /|_/ /
+/_/ |_/_/|_|\___/_/ |_/___/_/ |_| /___/   /_/___/ /_/ /___/_/  /_/
+⠀⠀⠀⠀⠀⠀⠀⠀⠀
+EOF
 
-    case $choice in
-        1) bash register.sh ;;
-        2) bash login.sh ;;
-        3) bash scripts/manager.sh ;;
-        4) exit 0 ;;
-        *) echo "Pilihan tidak valid." ;;
-    esac
-done
+echo "          ┌───────────────────────────────────────┐"
+echo "          │            ARCAEA TERMINAL            │"
+echo "          ├───────┬───────────────────────────────┤"
+echo "          │  ID   │ OPTION                        │"
+echo "          ├───────┼───────────────────────────────┤"
+echo "          │   1   │ Register New Account          │"
+echo "          │   2   │ Login to Existing Account     │"
+echo "          │   3   │ Exit Arcaea Terminal          │"
+echo "          └───────┴───────────────────────────────┘"
+
+printf "\n> Enter option [1-3]: "
+read choice
+
+case $choice in
+    1)
+        bash register.sh
+        ;;
+    2)
+        bash login.sh
+        if [ $? -eq 0 ]; then
+            bash ./scripts/manager.sh
+        fi
+        ;;
+    3)
+        echo -e "\n👋 Exiting Arcaea Terminal..."
+        exit 0
+        ;;
+    *)
+        echo -e "\n❌ Invalid choice. Please enter a number between 1 and 3."
+        ;;
+esac
+

@@ -13,27 +13,38 @@ validate_password() {
     [[ "$1" =~ [A-Z] ]] && [[ "$1" =~ [a-z] ]] && [[ "$1" =~ [0-9] ]] && [[ ${#1} -ge 8 ]]
 }
 
-read -p "Enter email: " email
-read -p "Enter username: " username
-read -s -p "Enter password: " password
-echo ""
+while true; do
+    read -p "Enter email: " email
+    if ! validate_email "$email"; then
+        echo "❌ Invalid email format!"
+        continue
+    fi
 
-if ! validate_email "$email"; then
-    echo "❌ Invalid email format!"
-    exit 1
-fi
+    if grep -q "^$email," "$DB_PATH"; then
+        echo "❌ Email is already registered!"
+        continue
+    fi
 
-if ! validate_password "$password"; then
-    echo "❌ Password must have at least 8 characters, 1 uppercase letter, 1 lowercase letter, and 1 number!"
-    exit 1
-fi
+    read -p "Enter username: " username
+    if [[ -z "$username" ]]; then
+        echo "❌ Username cannot be empty!"
+        continue
+    fi
 
-if grep -q "^$email," "$DB_PATH"; then
-    echo "❌ Email is already registered!"
-    exit 1
-fi
+    while true; do
+        read -s -p "Enter password: " password
+        echo ""
+        if ! validate_password "$password"; then
+            echo "❌ Password must have at least 8 characters, 1 uppercase letter, 1 lowercase letter, and 1 number!"
+            continue
+        fi
+        break
+    done
 
-hashed_password=$(echo -n "$password$SALT" | sha256sum | awk '{print $1}')
+    hashed_password=$(echo -n "$password$SALT" | sha256sum | awk '{print $1}')
+    echo "$email,$username,$hashed_password" >> "$DB_PATH"
 
-echo "$email,$username,$hashed_password" >> "$DB_PATH"
-echo "✅ Registration successful!"
+    echo "✅ Registration successful!"
+    break
+done
+
