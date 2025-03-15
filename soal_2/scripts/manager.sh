@@ -2,9 +2,10 @@
 
 SCRIPT_DIR=$(dirname "$(realpath "$0")")
 
-clear
+while true; do
+	clear
 
-cat << "EOF"
+	cat << "EOF"
 
   ___             _        _      __  __
  / __|_ _ ___ _ _| |_ __ _| |__  |  \/  |__ _ _ _  __ _ __ _ ___ _ _
@@ -26,39 +27,39 @@ cat << "EOF"
      └───────┴───────────────────────────────────────────────┘
 EOF
 
-printf "\n> Enter option [1-6]: "
-read choice
+	printf "\n> Enter option [1-6]: "
+	read choice
 
-case $choice in
-    1)
-        (crontab -l 2>/dev/null; echo "* * * * * /bin/bash $SCRIPT_DIR/core_monitor.sh") | crontab -
-        echo "✅ CPU Monitoring added to crontab."
-        ;;
-    2)
-        (crontab -l 2>/dev/null; echo "* * * * * /bin/bash $SCRIPT_DIR/frag_monitor.sh") | crontab -
-        echo "✅ RAM Monitoring added to crontab."
-        ;;
-    3)
-        crontab -l | grep -v "$SCRIPT_DIR/core_monitor.sh" | crontab -
-        echo "✅ CPU Monitoring removed from crontab."
-        ;;
-    4)
-        crontab -l | grep -v "$SCRIPT_DIR/frag_monitor.sh" | crontab -
-        echo "✅ RAM Monitoring removed from crontab."
-        ;;
-    5)
-        echo "📋 Active crontab schedules:"
-        crontab -l
-        ;;
-    6)
-        echo "👋 Exiting..."
-        exit 0
-        ;;
-    *)
-        echo "❌ Invalid choice."
-        ;;
-esac
+	case $choice in
+    	1)
+        	(crontab -l 2>/dev/null; echo "* * * * * /bin/bash $SCRIPT_DIR/core_monitor.sh") | crontab -
+        	echo "✅ CPU Monitoring added to crontab."
+        	;;
+    	2)
+        	(crontab -l 2>/dev/null; echo "* * * * * /bin/bash $SCRIPT_DIR/frag_monitor.sh") | crontab -
+        	echo "✅ RAM Monitoring added to crontab."
+        	;;
+    	3)
+        	crontab -l | grep -v "$SCRIPT_DIR/core_monitor.sh" | crontab -
+        	echo "✅ CPU Monitoring removed from crontab."
+        	;;
+    	4)
+        	crontab -l | grep -v "$SCRIPT_DIR/frag_monitor.sh" | crontab -
+        	echo "✅ RAM Monitoring removed from crontab."
+        	;;
+    	5)
+        	echo "📋 Active crontab schedules:"
+        	crontab -l
+        	;;
+    	6)
+        	echo "👋 Exiting..."
+        	exit 0
+        	;;
+    	*)
+        	echo "❌ Invalid choice."
+        	;;
+	esac
 
-
-
-
+    printf "\nPress Enter to continue..."
+    read
+done
