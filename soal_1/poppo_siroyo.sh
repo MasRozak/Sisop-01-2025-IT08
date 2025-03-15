@@ -1,12 +1,21 @@
 #!/bin/bash
 
-awk 'BEGIN {FS=","} \
-	$0 ~/Chris Hemsworth/ {++n } \
-	END {print "Chris Hemsworth membaca", n, "buku"}'\
+awk 'BEGIN {FS=","}\
+	$0 ~/Chris Hemsworth/ {++n }\
+	END {if(n>0)\
+		{print "Chris Hemsworth membaca", n, "buku"}\
+	else\
+		{print "Chris Hemsworth tidak membaca buku"}\
+	}'\
 	 /home/nadiakusuma1001/sisop1_1/reading_data.csv
+
 awk 'BEGIN {FS=","; sum=0; n=0}\
 	 $8 ~ /Tablet/ {sum += $6; n++}\
-	 END {printf "Rata-rata durasi baca dengan Tablet: %.2f menit \n", sum/n}'\
+	 END {if (n>0){\
+		printf "Rata-rata durasi baca dengan Tablet: %.2f menit \n", sum/n}\
+	else {\
+		print "Tidak ada yang membaca menggunakan Tablet"}\
+	}'\
 	 /home/nadiakusuma1001/sisop1_1/reading_data.csv
 awk 'BEGIN {FS=","; m=0}\
 	NR > 1 \
