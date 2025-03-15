@@ -443,16 +443,13 @@ done
 
 - ADD CPU
 ![image](https://github.com/user-attachments/assets/0d8bb557-99ff-4d7b-93b6-7369ab24dff6)
-<br>
-
 ![image](https://github.com/user-attachments/assets/6484e7a1-024f-40db-8438-03eecaa8142f)
-
+<br>
 
 - ADD RAM
 ![image](https://github.com/user-attachments/assets/b05c8c38-55bb-4bf4-bc05-692b6156b70b)
-<br>
-
 ![image](https://github.com/user-attachments/assets/7f0755fe-4c07-44f0-8f14-969071b30a18)
+<br>
 
 - btop
 ![image](https://github.com/user-attachments/assets/04aadb03-ea43-4f71-929e-ca13c42a1268)
