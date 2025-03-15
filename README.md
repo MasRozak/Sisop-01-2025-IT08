@@ -7,6 +7,24 @@ Anggota IT08:
 | Moch. Rizki Nasrullah | 5027241038 |
 | Nadia Fauziazahra Kusumastuti | 5027241094 |
 ----
+## Soal 3
+[Author: Afnaan / honque]
+
+Untuk merayakan ulang tahun ke 52 album The Dark Side of the Moon, tim PR Pink Floyd mengadakan sebuah lomba dimana peserta diminta untuk membuat sebuah script bertemakan setidaknya 5 dari 10 lagu dalam album tersebut. Sebagai salah satu peserta, kamu memutuskan untuk memilih Speak to Me, On the Run, Time, Money, dan Brain Damage. Saat program ini dijalankan, terminal harus dibersihkan terlebih dahulu agar tidak mengganggu tampilan dari fungsi fungsi yang kamu buat. Program ini dijalankan dengan cara `./dsotm.sh --play=”\<Track>”` dengan Track sebagai nama nama lagu yang kamu pilih.
+
+A. Speak to Me
+Untuk lagu ini, kamu memutuskan untuk membuat sebuah fitur yang memanggil API yang baru saja kamu temukan kemarin, `https://github.com/annthurium/affirmations` untuk menampilkan word of affirmation setiap detik. Diberikan kebebasan artistik, tidak harus sama persis dengan tampilan pada gif, tetapi untuk fungsionalitas, word of affirmation baru harus ditampilkan tiap detik.
+
+```bash
+
+affirm() {
+    while true; do
+        affirmation=$(curl -s https://www.affirmations.dev/ | sed -E 's/.*"affirmation":"([^"]+)".*/\1/')
+        printf "%s\n" "$affirmation"
+        sleep 1
+    done
+}
+```
 
 ## Soal 2
 [Author: Nathan / etern1ty]
