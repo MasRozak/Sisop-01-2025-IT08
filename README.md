@@ -1199,7 +1199,7 @@ EOF
 -- `--search rotom` --
 <br>
 
-![image](https://github.com/user-attachments/assets/88838205-0473-4f8b-9ce7-62bd3c263a02)
+![image](https://github.com/user-attachments/assets/d8a9bf27-f518-42dd-b483-228062f26fc3)
 <br>
 <br>
 
