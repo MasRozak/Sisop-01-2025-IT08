@@ -7,91 +7,6 @@ Anggota IT08:
 | Moch. Rizki Nasrullah | 5027241038 |
 | Nadia Fauziazahra Kusumastuti | 5027241094 |
 ----
-## Soal 1
-[Author: Azza / trenttzzz]
-
-Di sebuah desa kecil yang dikelilingi bukit hijau, Poppo dan Siroyo, dua sahabat karib, sering duduk di bawah pohon tua sambil membayangkan petualangan besar. Poppo, yang ceria dan penuh semangat, baru menemukan kesenangan dalam dunia buku, sementara Siroyo, dengan otaknya yang tajam, suka menganalisis segala hal. Suatu hari, mereka menemukan tablet ajaib berisi catatan misterius bernama reading_data.csv. Dengan bantuan keajaiban awk, mereka memutuskan untuk menjelajahi rahasia di balik data itu, siap menghadapi tantangan demi tantangan dalam petualangan baru mereka
-
-```bash
-
-#!/bin/bash
-
-if [ ! -f reading_data.csv ]; then
-    wget -O reading_data.csv "https://drive.usercontent.google.com/u/0/uc?id=1l8fsj5LZLwXBlHaqhfJVjz_T0p7EJjqV&export=download"
-```
-
-A. Poppo baru saja mulai melihat tablet ajaib dan terpukau dengan kekerenan orang bernama “Chris Hemsworth”. Poppo jadi sangat ingin tahu berapa banyak buku yang dibaca oleh “Chris Hemsworth”. Bantu Poppo menghitung jumlah baris di tablet ajaib yang menunjukkan buku-buku yang dibaca oleh Chris Hemsworth.
-Contoh Output:
-Chris Hemsworth membaca 2 buku.
-
-```bash
-awk 'BEGIN {FS=","}\
-	$0 ~/Chris Hemsworth/ {++n }\
-	END {if(n>0)\
-		{print "Chris Hemsworth membaca", n, "buku"}\
-	else\
-		{print "Chris Hemsworth tidak membaca buku"}\
-	}'\
-	reading_data.csv
-```
-B. Setelah menemukan tablet ajaib, Siroyo mulai penasaran dengan kebiasaan membaca yang tersimpan di dalamnya. Ia mulai menggunakan tablet ajaib dan bergumam sambil meneliti, “Aku ingin tahu berapa lama rata-rata mereka membaca dengan benda ini”. Bantu Siroyo untuk menghitung rata-rata durasi membaca (Reading_Duration_Minutes) untuk buku-buku yang dibaca menggunakan “Tablet” 
-Contoh Output:
-Rata-rata durasi membaca dengan Tablet adalah 60.5 menit.
-```bash
-awk 'BEGIN {FS=","; sum=0; n=0}\
-	 $8 ~ /Tablet/ {sum += $6; n++}\
-	 END {if (n>0){\
-		printf "Rata-rata durasi baca dengan Tablet: %.2f menit \n", sum/n}\
-	else {\
-		print "Tidak ada yang membaca menggunakan Tablet"}\
-	}'\
-	reading_data.csv 
-```
-C. Sementara Siroyo sibuk menganalisis tablet ajaib, Poppo duduk disampingnya dengan ide cemerlang. “Kalau kita sudah tahu cara mereka membaca, aku ingin memberi hadiah ke temen yang paling suka sama bukunya!”. Ia pun mencari siapa yang memberikan rating tertinggi untuk buku yang dibaca (Rating) beserta nama (Name) dan judul bukunya (Book_Title).
-Contoh Output:
-Pembaca dengan rating tertinggi: Brie Larson - Business Strategies - 4.7
-```bash
-awk 'BEGIN {FS=","; m=0}\
-	NR > 1 \
-	{if($7 > m) {m = $7; b = $3; n = $2}}\
-	END {print "Pembaca dengan rating tertinggi adalah", n, "berjudul", b, "dengan rating", m}'\
-	reading_data.csv
-```
-D. Siroyo mengusap keningnya dan berkata, "Petualangan kita belum selesai! Aku harus bikin laporan untuk klub buku besok." Ia ingin membuat laporan yang istimewa dengan tablet ajaib itu, fokus pada teman-teman di Asia. "Aku penasaran genre apa yang paling populer di sana setelah tahun 2023," katanya, membuka reading_data.csv sekali lagi. Bantu Siroyo menganalisis data untuk menemukan genre yang paling sering dibaca di Asia setelah 31 Desember 2023, beserta jumlahnya, agar laporannya jadi yang terbaik di klub.
-Contoh Output:
-Genre paling populer di Asia setelah 2023 adalah Science dengan 1 buku.
-
-```bash
-awk 'BEGIN {FS=","; prev=0}\
-	$9 ~ /Asia/ && $5 > "2023-12-31"\
-	{count[$4]++; for(genre in count){\
-		if(count[genre] > prev){\
-			prev = count[genre]; g = genre}\
-	}\
-	} END {print "Genre paling populer di Asia setelah 2023 adalah", g, "dengan buku sebanyak", prev}'\
-	reading_data.csv 
-```
-Note:
-Seluruh command dimasukkan kedalam 1 file dan gunakan kondisi if else untuk setiap soalnya.
-
-## Soal 3
-[Author: Afnaan / honque]
-
-Untuk merayakan ulang tahun ke 52 album The Dark Side of the Moon, tim PR Pink Floyd mengadakan sebuah lomba dimana peserta diminta untuk membuat sebuah script bertemakan setidaknya 5 dari 10 lagu dalam album tersebut. Sebagai salah satu peserta, kamu memutuskan untuk memilih Speak to Me, On the Run, Time, Money, dan Brain Damage. Saat program ini dijalankan, terminal harus dibersihkan terlebih dahulu agar tidak mengganggu tampilan dari fungsi fungsi yang kamu buat. Program ini dijalankan dengan cara `./dsotm.sh --play=”\<Track>”` dengan Track sebagai nama nama lagu yang kamu pilih.
-
-A. Speak to Me
-Untuk lagu ini, kamu memutuskan untuk membuat sebuah fitur yang memanggil API yang baru saja kamu temukan kemarin, `https://github.com/annthurium/affirmations` untuk menampilkan word of affirmation setiap detik. Diberikan kebebasan artistik, tidak harus sama persis dengan tampilan pada gif, tetapi untuk fungsionalitas, word of affirmation baru harus ditampilkan tiap detik.
-
-```bash
-
-affirm() {
-    while true; do
-        affirmation=$(curl -s https://www.affirmations.dev/ | sed -E 's/.*"affirmation":"([^"]+)".*/\1/')
-        printf "%s\n" "$affirmation"
-        sleep 1
-    done
-}
-```
 
 ## Soal 2
 [Author: Nathan / etern1ty]
@@ -545,6 +460,276 @@ done
 	- Jika kita bandingkan hasil btop dengan CPU dan RAM, dapat dilihat bahwa hasil monitoring CPU dan RAM sudah akurat
 <br>
 <br>
+
+
+## Soal 3
+[Author: Afnaan / honque]
+
+Untuk merayakan ulang tahun ke 52 album The Dark Side of the Moon, tim PR Pink Floyd mengadakan sebuah lomba dimana peserta diminta untuk membuat sebuah script bertemakan setidaknya 5 dari 10 lagu dalam album tersebut. Sebagai salah satu peserta, kamu memutuskan untuk memilih Speak to Me, On the Run, Time, Money, dan Brain Damage. Saat program ini dijalankan, terminal harus dibersihkan terlebih dahulu agar tidak mengganggu tampilan dari fungsi fungsi yang kamu buat. Program ini dijalankan dengan cara `./dsotm.sh --play=”\<Track>”` dengan Track sebagai nama nama lagu yang kamu pilih.
+
+A. Speak to Me
+Untuk lagu ini, kamu memutuskan untuk membuat sebuah fitur yang memanggil API yang baru saja kamu temukan kemarin, `https://github.com/annthurium/affirmations` untuk menampilkan word of affirmation setiap detik. Diberikan kebebasan artistik, tidak harus sama persis dengan tampilan pada gif, tetapi untuk fungsionalitas, word of affirmation baru harus ditampilkan tiap detik.
+
+```bash
+
+affirm() {
+    while true; do
+        affirmation=$(curl -s https://www.affirmations.dev/ | sed -E 's/.*"affirmation":"([^"]+)".*/\1/')
+        printf "%s\n" "$affirmation"
+        sleep 1
+    done
+}
+```
+![before revisi](https://github.com/user-attachments/assets/e9483389-0d38-4ba0-a7c8-0d755fa3f8d0)
+
+
+# Revisi:
+Ubah Tampilan agar lebih menarik menjadi:
+![After revisi](https://github.com/user-attachments/assets/98083a2d-fa28-4758-8d91-58b762591456)
+```bash
+affirm() {
+RESET="\e[0m"
+HIGHLIGHT="\e[30;47m"  
+
+affirmations=("" "" "")
+
+while true; do
+    rows=$(tput lines)
+    cols=$(tput cols)
+
+    new_affirmation=$(curl -s https://www.affirmations.dev/ | sed -E 's/.*"affirmation":"([^"]+)".*/\1/')
+
+    affirmations=("${affirmations[1]}" "${affirmations[2]}" "$new_affirmation")
+
+    clear
+
+    start_row=$((rows / 2 - 1))
+
+    for i in {0..2}; do
+        text_length=${#affirmations[i]}
+        col=$(((cols - text_length) / 2))
+        tput cup $((start_row + i)) $col
+        
+        if [[ $i -eq 1 ]]; then
+            printf "${HIGHLIGHT}%s${RESET}\n" "${affirmations[i]}"
+        else
+            printf "%s\n" "${affirmations[i]}"
+        fi
+    done
+
+    sleep 1
+done
+}
+```
+
+- `affirm()`: Fungsi untuk menampilkan word of affirmation setiap detik
+	- `while true; do`: Loop tak terbatas
+		- `affirmation=$(curl -s https://www.affirmations.dev/ | sed -E 's/.*"affirmation":"([^"]+)".*/\1/')`: Mengambil word of affirmation dari API `https://www.affirmations.dev/` menggunakan `curl` dan `sed`
+		- `printf "%s\n" "$affirmation"`: Menampilkan word of affirmation
+		- `sleep 1`: Menunggu 1 detik sebelum mengambil word of affirmation berikutnya
+
+Setelah Revisi tampilannya menjadi lebih menarik dimana kata-kata yang diambil dari API akan berada di tengah layar dan diberi highlight agar terlihat lebih menarik. Selain itu hanya ada 3 kalimat yang ditampilkan dimana setiap detik ada kalimat baru yang muncul dan kalimat yang paling lama akan hilang.
+
+B. On the Run
+
+Selanjutnya, kamu memutuskan untuk membuat sebuah **progress bar** yang berjalan dengan interval random (setiap progress bertambah dalam interval waktu yang random dengan range 0.1 detik sampai 1 detik).
+
+```bash
+progress_bar() {
+    local progress=$1
+    local i=$1
+    local total=100
+    local width=$(tput cols)  
+    width=$((width - 10))     
+
+    local num_stars=$((progress * width / total))
+    local num_space=$((width - num_stars))
+
+    printf "\e[30m\e[47m\r["
+    printf "\e[38;5;${i}m\e[47m"
+    printf "%0.s*" $(seq 1 $num_stars)  
+    printf "\e[0m\e[47m"  
+    printf "%0.s " $(seq 1 $num_space)  
+    printf "\e[30m\e[47m] %d%%\e[0m" "$progress"
+}
+```
+- `progress_bar()`: Fungsi untuk menampilkan progress bar
+	- `local progress=$1`: Menyimpan nilai progress yang diberikan
+	- `local i=$1`: Menyimpan nilai progress yang diberikan
+	- `local total=100`: Menyimpan total progress
+	- `local width=$(tput cols)`: Menyimpan lebar terminal
+	- `width=$((width - 10))`: Mengurangi lebar terminal dengan 10 untuk memberikan ruang tambahan
+	- `local num_stars=$((progress * width / total))`: Menghitung jumlah bintang yang harus ditampilkan berdasarkan progress
+	- `local num_space=$((width - num_stars))`: Menghitung jumlah spasi yang harus ditampilkan
+	- `printf "\e[30m\e[47m\r[`: Menampilkan karakter `[` dengan warna background putih dan teks hitam
+	- `printf "\e[38;5;${i}m\e[47m"`: Mengatur warna teks sesuai dengan nilai progress
+	- `printf "%0.s*" $(seq 1 $num_stars)`: Menampilkan bintang sebanyak `$num_stars`
+	- `printf "\e[0m\e[47m"`: Mengatur warna teks kembali ke default
+	- `printf "%0.s " $(seq 1 $num_space)`: Menampilkan spasi sebanyak `$num_space`
+	- `printf "\e[30m\e[47m] %d%%\e[0m" "$progress"`: Menampilkan karakter `]` dengan warna background putih dan teks hitam, diikuti dengan persentase progress
+
+C. Time
+Singkat saja, untuk time, kamu memutuskan untuk membuat live clock yang menunjukkan tanggal, jam, menit dan detik.
+
+```bash
+waktu() {
+    while true; do
+        clear
+        hari=$(printf "%(%A)T\n" -1)
+        case "$hari" in
+            "Monday") hari="Senin" ;;
+            "Tuesday") hari="Selasa" ;;
+            "Wednesday") hari="Rabu" ;;
+            "Thursday") hari="Kamis" ;;
+            "Friday") hari="Jumat" ;;
+            "Saturday") hari="Sabtu" ;;
+            "Sunday") hari="Minggu" ;;
+        esac
+        echo "$hari,"
+        printf "%(%d %b %Y %H:%M:%S)T\n" -1
+        sleep 1
+    done
+}
+```
+- `waktu()`: Fungsi untuk menampilkan live clock
+	- `while true; do`: Loop tak terbatas
+		- `clear`: Membersihkan terminal
+		- `hari=$(printf "%(%A)T\n" -1)`: Mengambil nama hari dalam bahasa Inggris
+		- `case "$hari" in ... esac`: Mengubah nama hari dalam bahasa Inggris menjadi bahasa Indonesia
+		- `echo "$hari,"`: Menampilkan nama hari
+		- `printf "%(%d %b %Y %H:%M:%S)T\n" -1`: Menampilkan tanggal dan waktu dalam format `DD MMM YYYY HH:MM:SS`
+		- `sleep 1`: Menunggu 1 detik sebelum menampilkan waktu berikutnya
+
+D. Money
+
+Kamu teringat dengan program yang sangat disukai oleh teman mu yang bernama cmatrix. Kamu pun memutuskan untuk membuat program yang mirip, tetapi mengganti isinya dengan simbol mata uang seperti $ € £ ¥ ¢ ₹ ₩ ₿ ₣ dan lain lainnya.
+
+
+```bash
+uang() {
+    local symbols=('$' '€' '£' '¥' '₫' '₹' '₩' '฿' '₣')
+    local colors=("\033[31m" "\033[32m" "\033[33m" "\033[34m" "\033[35m" "\033[36m" "\033[91m" "\033[92m" "\033[93m")
+    local rows=$(tput lines)
+    local cols=$(tput cols)
+    
+    while true; do  
+        local rand_row=$(( RANDOM % rows + 1 ))
+        local rand_col=$(( RANDOM % cols + 1 ))
+        local rand_num=$((RANDOM % 9))
+        local symbol="${symbols[$rand_num]}"
+        local color="${colors[$rand_num]}"
+        printf "$color\n\n\n\033[%d;%dH%s\e[0m" "$rand_row" "$rand_col" "$symbol"
+        sleep 0.005
+    done
+}
+```
+- `uang()`: Fungsi untuk menampilkan simbol mata uang
+	- `local symbols=('$' '€' '£' '¥' '₫' '₹' '₩' '฿' '₣')`: Menyimpan simbol mata uang
+	- `local colors=("\033[31m" "\033[32m" "\033[33m" "\033[34m" "\033[35m" "\033[36m" "\033[91m" "\033[92m" "\033[93m")`: Menyimpan kode warna
+	- `local rows=$(tput lines)`: Menyimpan jumlah baris terminal
+	- `local cols=$(tput cols)`: Menyimpan jumlah kolom terminal
+	- `while true; do`: Loop tak terbatas
+		- `local rand_row=$(( RANDOM % rows + 1 ))`: Menghasilkan baris acak
+		- `local rand_col=$(( RANDOM % cols + 1 ))`: Menghasilkan kolom acak
+		- `local rand_num=$((RANDOM % 9))`: Menghasilkan angka acak
+		- `local symbol="${symbols[$rand_num]}"`: Mengambil simbol mata uang acak
+		- `local color="${colors[$rand_num]}"`: Mengambil kode warna acak
+		- `printf "$color\n\n\n\033[%d;%dH%s\e[0m" "$rand_row" "$rand_col" "$symbol"`: Menampilkan simbol mata uang dengan warna acak di posisi acak
+		- `sleep 0.005`: Menunggu 0.005 detik sebelum menampilkan simbol mata uang berikutnya
+
+E. Brain Damage
+Brain Damage
+Untuk lagu Brain Damage, kamu mendapatkan ide untuk menampilkan proses yang sedang berjalan, seperti task manager tetapi menampilkannya di dalam terminal dan membuat agar task manager tersebut menampilkan data baru setiap detiknya.
+
+```bash
+bdm() {
+    while true; do
+        clear
+        width=$(tput cols)
+        half_width=$((width / 2))
+        title="Task Manager - $(date)"
+        length=$(echo -n "$title" | wc -c)
+        half_length=$((length / 2))
+        half_width=$((half_width - half_length))
+
+        total_cpu=$(ps -eo %cpu | awk '{sum+=$1} END {print sum}')
+        total_mem_used=$(free -m | awk '/Mem:/ {print $3}')
+        total_mem_total=$(free -m | awk '/Mem:/ {print $2}')
+        total_process=$(ps -eo pid | awk 'NR>1 {sum+=1} END {print sum}')
+
+        printf "%-${half_width}s" " "
+        echo "$title"
+        printf "%-${half_width}s" " "
+        printf "%-${length}s\n" "-" | tr ' ' '-'
+
+        printf "%-${half_width}s                USER : " " "
+        whoami
+        
+        echo -e "Total Proses: $total_process \n"
+        echo -e "Total CPU Usage: $total_cpu% \n"
+        echo -e "Total Memory Used: $total_mem_used MiB / $total_mem_total MiB \n"
+        printf "%-${width}s\n" "-" | tr ' ' '-'
+
+        ps -eo pid,user,%cpu,%mem,vsz,rss,stat,start,time,command --sort=-%cpu |
+        awk 'NR==1 {printf "|%-7s \t| %-8s | %-5s | %-5s | %-7s | %-5s | %-5s | %-8s | %-8s | %s\n", "PID", "USER" , "%CPU" , "%MEM" , "VSZ", "RSS" , "STAT" , "START" , "TIME" , "COMMAND"}
+             NR>1 {printf "|%-7s \t| %-8s | %-5s | %-5s | %-7s | %-5s | %-5s | %-8s | %-8s | %s \n", $1, $2, $3, $4, $5, $6, $7, $8, $9, $10}'
+        
+        printf "%-${width}s\n" "-" | tr ' ' '-'
+        sleep 1
+    done
+}
+```
+- `bdm()`: Fungsi untuk menampilkan task manager
+	- `while true; do`: Loop tak terbatas
+		- `clear`: Membersihkan terminal
+		- `width=$(tput cols)`: Menyimpan lebar terminal
+		- `half_width=$((width / 2))`: Menyimpan setengah lebar terminal
+		- `title="Task Manager - $(date)"`: Menyimpan judul task manager
+		- `length=$(echo -n "$title" | wc -c)`: Menyimpan panjang judul
+		- `half_length=$((length / 2))`: Menyimpan setengah panjang judul
+		- `half_width=$((half_width - half_length))`: Menyimpan setengah lebar terminal setelah judul
+		- `total_cpu=$(ps -eo %cpu | awk '{sum+=$1} END {print sum}')`: Menyimpan total penggunaan CPU
+		- `total_mem_used=$(free -m | awk '/Mem:/ {print $3}')`: Menyimpan total memori yang digunakan
+		- `total_mem_total=$(free -m | awk '/Mem:/ {print $2}')`: Menyimpan total memori yang tersedia
+		- `total_process=$(ps -eo pid | awk 'NR>1 {sum+=1} END {print sum}')`: Menyimpan total proses yang berjalan saat ini
+		- Menampilkan informasi pengguna, total proses, penggunaan CPU, penggunaan memori, dan header tabel
+		- `ps -eo pid,user,%cpu,%mem,vsz,rss,stat,start,time,command --sort=-%cpu | awk 'NR==1 {printf ...}'`: Menampilkan data proses yang berjalan, diurutkan berdasarkan penggunaan CPU
+		- `sleep 1`: Menunggu 1 detik sebelum menampilkan data proses berikutnya
+
+# Kerangka Program
+```bash
+#!/bin/bash
+
+argu=$1
+argu="${argu#--play}"
+clear
+
+case "$argu" in 
+    "Speak to Me")
+        affirm
+        ;;
+    "On the Run")
+        otr
+        ;;
+    "Time")
+        waktu
+        ;;
+    "Money")
+        uang
+        ;;
+    "Brain Damage")
+        bdm
+        ;;
+    *)
+        echo "Argumen tidak dikenali."
+        ;;
+esac
+
+```
+
+- `argu=$1`: Menyimpan argumen pertama yang diberikan
+- `argu="${argu#--play}"`: Menghapus string `--play` dari argumen
+- Selanjutnya akan menjalankan fungsi sesuai dengana argumen yang diberikan
 
 ## Soal 4
 [Author: Amoes / winter]

@@ -5,11 +5,37 @@ argu="${argu#--play}"
 clear
 
 affirm() {
-    while true; do
-        affirmation=$(curl -s https://www.affirmations.dev/ | sed -E 's/.*"affirmation":"([^"]+)".*/\1/')
-        printf "%s\n" "$affirmation"
-        sleep 1
+RESET="\e[0m"
+HIGHLIGHT="\e[30;47m"  
+
+affirmations=("" "" "")
+
+while true; do
+    rows=$(tput lines)
+    cols=$(tput cols)
+
+    new_affirmation=$(curl -s https://www.affirmations.dev/ | sed -E 's/.*"affirmation":"([^"]+)".*/\1/')
+
+    affirmations=("${affirmations[1]}" "${affirmations[2]}" "$new_affirmation")
+
+    clear
+
+    start_row=$((rows / 2 - 1))
+
+    for i in {0..2}; do
+        text_length=${#affirmations[i]}
+        col=$(((cols - text_length) / 2))
+        tput cup $((start_row + i)) $col
+        
+        if [[ $i -eq 1 ]]; then
+            printf "${HIGHLIGHT}%s${RESET}\n" "${affirmations[i]}"
+        else
+            printf "%s\n" "${affirmations[i]}"
+        fi
     done
+
+    sleep 1
+done
 }
 
 progress_bar() {
@@ -43,7 +69,7 @@ otr() {
 waktu() {
     while true; do
         clear
-        hari=$(printf "%(%%A)T")
+        hari=$(printf "%(%A)T\n" -1)
         case "$hari" in
             "Monday") hari="Senin" ;;
             "Tuesday") hari="Selasa" ;;
@@ -54,10 +80,11 @@ waktu() {
             "Sunday") hari="Minggu" ;;
         esac
         echo "$hari,"
-        printf "%(%%d %%b %%Y %%H:%%M:%%S)T"
+        printf "%(%d %b %Y %H:%M:%S)T\n" -1
         sleep 1
     done
 }
+
 
 uang() {
     local symbols=('$' '€' '£' '¥' '₫' '₹' '₩' '฿' '₣')
